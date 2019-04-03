@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/odavom/Bamazon#readme",
   "dependencies": {
+    "chalk": "^2.4.2",
+    "console.table": "^0.10.0",
     "inquirer": "^6.2.2",
     "mysql": "^2.16.0"
   }
