@@ -77,39 +77,56 @@ function userInput() {
         .prompt([{
             type: 'input',
             name: 'item_id',
-            message: '\nPlease enter purchase item_id.\n',
-            validate: function(input) {
-                if (!isNaN(input) && parseInt(input) > 0){
-                    return true
-                } else {
-                    console.log("\nPlease enter a valid id number.\n");
-                    return false
-                    
-                }
+            message: 'Please enter purchase item_id.',
+            validate: function(value) {
+                if(isNaN(value)) {
+                    // why will this not return???
+                    // console.log("\nEnter valid item_id!\n");
+                    return "Enter valid item_id!" ;
+                } return true;
             }
+            // validate: function(value) {
+                // console.log('item_id')
+           
+                // if (value > 20 || value < 0 || value === isNaN) {
+                //     console.log("\nPlease enter a valid id number.\n");
+                //     return false;  
+                // } return true;
+                // if (!isNaN(input) && parseInt(input) > 0){
+                //     return true
+                // } else {
+                //     console.log("\nPlease enter a valid id number.\n");
+                //     return false
+                    
+                // }
+            // }
         },
+        
         {
             type: 'input',
             name: 'quantity',
-            message: '\nHow many would you like to purchase?\n',
+            message: 'How many would you like to purchase?',
             validate: function(input) {
             if (!isNaN(input) && parseInt(input) > 0){
                 return true
             } else {
-                console.log("\nPlease enter a number greater then zero.\n");
-                return false
+                // console.log("Please enter a number greater then zero.");
+                return "Please enter a number greater then zero."
             }
         }
     }
 ]).then(answer => {
             // console.log(answer)
-            connection.query("SELECT stock_quantity, customer_price FROM products WHERE ?", {item_id: answer.item_id},
+            connection.query("SELECT stock_quantity, customer_price FROM products WHERE ?", 
+            {
+                item_id: answer.item_id
+            },
             
             function (err, res) {
                 if (err) throw err;
-                console.log(res)
-                console.log(res[0].stock_quantity);
-                console.log(res[0].customer_price);
+                // console.log(res)
+                // console.log(res[0].stock_quantity);
+                // console.log(res[0].customer_price);
 
                 let quantity = res[0].stock_quantity;
                 let updateQuantity = quantity - parseInt(answer.quantity)
@@ -141,10 +158,7 @@ function userInput() {
                     }
                     )
                 }
-            }
-           
-
-            )
+            })
             // console.log(connection.query());
 
             // INSERT use when want to add dataup
